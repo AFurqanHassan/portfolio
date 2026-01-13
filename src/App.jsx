@@ -7,6 +7,7 @@ import Skills from './components/Skills';
 
 function App() {
   const { data, loading, error } = useGitHubData();
+  console.log('Portfolio State:', { data, loading, error });
 
   if (loading) {
     return (
@@ -33,7 +34,25 @@ function App() {
       <BackgroundScene />
       
       <main>
-        <Hero username={data.username} tagline={data.tagline} />
+        {window.location.hostname === 'localhost' && !data.isMock && data.username === 'AFurqanHassan' && (
+          <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2 glass-card border-yellow-500/50 text-yellow-200 text-sm animate-bounce shadow-2xl">
+            💡 Local Dev: Use <code className="text-white">?user=YOUR_USERNAME</code> to see your own data!
+          </div>
+        )}
+
+        {data.isMock && (
+          <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 glass-card border-purple-500/50 text-purple-200 text-sm animate-pulse shadow-2xl">
+            ✨ {data.isRateLimited ? "GitHub API Limited - Viewing Demo Mode" : "Demo Mode Active"}
+          </div>
+        )}
+
+        <Hero 
+          username={data.username} 
+          name={data.name} 
+          tagline={data.tagline} 
+          bio={data.bio} 
+          avatar={data.avatar}
+        />
         <ProjectList projects={data.projects} />
         <Skills skills={data.skills} />
       </main>

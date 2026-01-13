@@ -1,7 +1,7 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { MeshDistortMaterial, Float, Sphere, Points, PointMaterial, MeshWobbleMaterial } from '@react-three/drei';
-import * as THREE from 'three';
+import { MeshDistortMaterial, Points, PointMaterial, MeshWobbleMaterial } from '@react-three/drei';
+import { stringToHash, createPRNG } from '../../utils/random';
 
 // 1. Parametric Wave Mesh
 export const ParametricWave = ({ color = "#8833ff" }) => {
@@ -27,16 +27,17 @@ export const ParametricWave = ({ color = "#8833ff" }) => {
 };
 
 // 2. Particle Field
-export const ParticleField = ({ color = "#33ffff" }) => {
+export const ParticleField = ({ color = "#33ffff", seed = 0 }) => {
   const points = useMemo(() => {
+    const random = createPRNG(seed || 123);
     const p = new Float32Array(500 * 3);
     for (let i = 0; i < 500; i++) {
-      p[i * 3] = (Math.random() - 0.5) * 4;
-      p[i * 3 + 1] = (Math.random() - 0.5) * 4;
-      p[i * 3 + 2] = (Math.random() - 0.5) * 4;
+      p[i * 3] = (random() - 0.5) * 4;
+      p[i * 3 + 1] = (random() - 0.5) * 4;
+      p[i * 3 + 2] = (random() - 0.5) * 4;
     }
     return p;
-  }, []);
+  }, [seed]);
 
   const ref = useRef();
   useFrame((state) => {
@@ -97,7 +98,9 @@ export const DeformationGrid = ({ color = "#33ff88" }) => {
 };
 
 // Helper to get a random pattern based on a string (e.g. repo name)
-export const getProjectPattern = (repoName, index) => {
+export const getProjectPattern = (repoName) => {
+  const hash = stringToHash(repoName);
+  
   const patterns = [
     ParametricWave,
     ParticleField,
@@ -105,12 +108,16 @@ export const getProjectPattern = (repoName, index) => {
     DeformationGrid
   ];
   
-  // Deterministic choice based on index or hash
-  const Component = patterns[index % patterns.length];
+  // Deterministic choice based on hash
+  const Component = patterns[hash % patterns.length];
   
-  // Deterministic color
-  const colors = ["#8833ff", "#33ffff", "#ff3366", "#33ff88", "#ffaa33", "#ffffff"];
-  const color = colors[index % colors.length];
+  // Deterministic color palette
+  const colors = [
+    "#8833ff", "#33ffff", "#ff3366", "#33ff88", 
+    "#ffaa33", "#ffffff", "#4488ff", "#ff44cc"
+  ];
+  
+  const color = colors[hash % colors.length];
 
-  return <Component color={color} />;
+  return <Component color={color} seed={hash} />;
 };

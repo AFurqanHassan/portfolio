@@ -1,16 +1,36 @@
-# React + Vite
+# 🌌 Automated 3D Neural Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fully automated, fork-and-deploy personal portfolio website that self-configures based on the GitHub account that hosts it.
 
-Currently, two official plugins are available:
+## 🚀 Quick Start (Zero Config)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1.  **Fork** this repository.
+2.  Go to **Settings > Pages**.
+3.  Set the source to the `main` branch (or `gh-pages` if you prefer a build).
+4.  **Done!** Your portfolio is live at `https://[your-username].github.io/portfolio/`.
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **GitHub Username Detection**: Automatically detects you as the owner.
+- **Project Discovery**: Fetches all your public repositories and highlights those with GitHub Pages enabled.
+- **Deterministic 3D Visuals**: Every project gets a unique, immersive 3D pattern generated from its name.
+- **AI Tagline & Skills**: Inferred automatically from your repository data and languages.
+- **Immersive Backgrounds**: Full-screen 3D starfield and geometric floats.
 
-## Expanding the ESLint configuration
+## 🛠️ Local Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+To see your own data locally, append your username to the URL:
+`http://localhost:5173/?user=YOUR_USERNAME`
+
+## 🎨 Technology Stack
+
+- **React** + **Vite**
+- **Three.js** (via @react-three/fiber & @react-three/drei)
+- **Framer Motion** (Animations)
+- **Lucide React** (Icons)
+- **Vanilla CSS** (Glassmorphic Design)

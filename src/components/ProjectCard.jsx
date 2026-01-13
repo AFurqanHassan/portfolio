@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Github, Star } from 'lucide-react';
 import { getProjectPattern } from './canvas/Patterns';
 
-const ProjectCard = ({ project, index }) => {
+const ProjectCard = ({ project }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -16,7 +16,7 @@ const ProjectCard = ({ project, index }) => {
         <Canvas camera={{ position: [0, 0, 4] }}>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} />
-          {getProjectPattern(project.name, index)}
+          {getProjectPattern(project.name)}
         </Canvas>
       </div>
       
